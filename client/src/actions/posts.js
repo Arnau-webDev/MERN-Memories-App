@@ -9,7 +9,7 @@ export const startFetchPosts = () => {
 
             dispatch(fetchPosts(data));
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 };
@@ -29,7 +29,7 @@ export const startCreatePost = (post) => {
             dispatch(createPost(data));
 
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         }
     };
 };
@@ -38,5 +38,64 @@ const createPost = (newPost) => {
     return {
         type: types.postsCreateNew,
         payload: newPost
+    };
+};
+
+export const startUpdatePost = (id, post) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await api.updatePost(id, post);
+
+            dispatch(updatePost(data));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+const updatePost = (data) => {
+    return {
+        type: types.postsUpdate,
+        payload: data
+    };
+};
+
+export const startDeletePost = (id) => {
+    return async (dispatch) => {
+        try {
+            await api.deletePost(id);
+
+            dispatch(deletePost(id));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+export const deletePost = (id) => {
+    return {
+        type: types.postsDelete,
+        payload: id
+    };
+};
+
+export const startLikePost = (id) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await api.likePost(id);
+
+            console.log(data);
+
+            dispatch(likePost(data._id));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+const likePost = (id) => {
+    return {
+        type: types.postsLike,
+        payload: id
     };
 };

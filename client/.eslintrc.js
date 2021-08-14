@@ -37,6 +37,6 @@ module.exports = {
 		],
 		"react/prop-types": ["off"],
 		"no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
-		"no-extra-boolean-cast": 0
+		"no-extra-boolean-cast": 0,
 	}
 };

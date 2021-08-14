@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
 
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
-import { startCreatePost } from "../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { startCreatePost, startUpdatePost } from "../../actions/posts";
 
-const Form = () => {
-
-    const dispatch = useDispatch();
+const Form = ({ currentId, setCurrentId }) => {
 
     const initialFormState = {
         creator: "",
@@ -21,27 +19,38 @@ const Form = () => {
 
     const [postData, setPostData] = useState(initialFormState);
 
+    const dispatch = useDispatch();
+    const postToEdit = useSelector(state => currentId ? state.posts.find((p) => p._id === currentId) : null);
+
+    useEffect(() => {
+        if (postToEdit) setPostData(postToEdit);
+    }, [postToEdit]);
+
+
     const { root, paper, form, fileInput, buttonSubmit } = useStyles();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(startCreatePost(postData));
+        if (currentId) {
+            dispatch(startUpdatePost(currentId, postData));
+        } else {
+            dispatch(startCreatePost(postData));
+        }
 
         // Clear Form
         handleFormClear();
     };
 
     const handleFormClear = () => {
+        setCurrentId(null);
         setPostData(initialFormState);
     };
-
-    console.log(postData);
 
     return (
         <Paper className={paper}>
             <form autoComplete="off" noValidate className={`${form} ${root}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">Creating a memory</Typography>
+                <Typography variant="h6">{!currentId ? "Creating a memory" : "Editing a memory"}</Typography>
                 <TextField
                     value={postData.creator}
                     onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
@@ -65,7 +74,7 @@ const Form = () => {
                     fullWidth
                 /><TextField
                     value={postData.tags}
-                    onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+                    onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(",") })}
                     name="tags"
                     variant="outlined"
                     label="Tags"
