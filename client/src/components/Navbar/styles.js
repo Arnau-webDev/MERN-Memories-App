@@ -31,6 +31,7 @@ export default makeStyles((theme) => ({
     userName: {
         display: "flex",
         alignItems: "center",
+        margin: "0 5px"
     },
     brandContainer: {
         display: "flex",
@@ -39,5 +40,9 @@ export default makeStyles((theme) => ({
     purple: {
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500],
+        margin: "0 5px"
     },
+    userInfo: {
+        display: "flex",
+    }
 }));
