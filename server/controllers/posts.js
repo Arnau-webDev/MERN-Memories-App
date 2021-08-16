@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
+import User from "../models/user.js";
 
 export const getPosts = async (req, res) => {
     try {
@@ -14,7 +15,9 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
 
-    const newPost = new PostMessage(post);
+    const existingUser = await User.findOne({ _id: req.userId });
+
+    const newPost = new PostMessage({ ...post, creator: req.userId, name: existingUser.name, createdAt: new Date().toISOString() });
 
     try {
         await newPost.save();
@@ -54,12 +57,25 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
     const { id } = req.params;
 
+    if (!req.userId) return res.json({ message: "Not authenticated" });
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send("No post with that ID");
     }
 
     const post = await PostMessage.findById(id);
-    const likedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+
+    // Create new property to identify who liked the post already
+    const index = post.likedBy.findIndex((id) => id === String(req.userId));
+
+    if (index === -1) {
+        // like memory
+        post.likedBy.push(req.userId);
+    } else {
+        post.likedBy = post.likedBy.filter((id) => id !== String(req.userId));
+    }
+
+    const likedPost = await PostMessage.findByIdAndUpdate(id, { ...post, likeCount: post.likeCount + 1 }, { new: true });
 
     res.json(likedPost);
 }
