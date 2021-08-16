@@ -25,7 +25,7 @@ export const startCreatePost = (post) => {
     return async (dispatch) => {
         try {
             const { data } = await api.createPost(post);
-
+            console.log(data);
             dispatch(createPost(data));
 
         } catch (error) {
@@ -86,16 +86,16 @@ export const startLikePost = (id) => {
 
             console.log(data);
 
-            dispatch(likePost(data._id));
+            dispatch(likePost(data._id, data.likedBy));
         } catch (error) {
             console.log(error);
         }
     };
 };
 
-const likePost = (id) => {
+const likePost = (id, likedBy) => {
     return {
         type: types.postsLike,
-        payload: id
+        payload: { id, likedBy }
     };
 };

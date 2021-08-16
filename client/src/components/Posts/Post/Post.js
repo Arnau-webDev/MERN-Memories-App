@@ -31,7 +31,7 @@ const Post = ({ post, setCurrentId }) => {
         <Card className={card}>
             <CardMedia className={media} image={post.selectedFile} title={post.title} component="base" />
             <div className={overlay}>
-                <Typography variant="h6">{post.creator}</Typography>
+                <Typography variant="h6">{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
             <div className={overlay2}>
@@ -51,7 +51,7 @@ const Post = ({ post, setCurrentId }) => {
             <CardActions className={cardActions}>
                 <Button size="small" color="primary" onClick={() => dispatch(startLikePost(post._id))}>
                     <ThumbUpAltIcon fontSize="small" style={{ margin: "0 3px" }} />
-                    {`Like ${post.likeCount}`}
+                    {`Like ${post.likedBy.length}`}
                 </Button>
                 <Button size="small" color="primary" onClick={() => dispatch(startDeletePost(post._id))}>
                     <DeleteIcon fontSize="small" />

@@ -8,5 +8,7 @@ export const types = {
 
     authLogIn: "[AUTH] Login",
     authLogout: "[AUTH] Logout",
+    authSignIn: "[AUTH] Sign In",
+    authSignUp: "[AUTH] Sign Up",
     authPersistedDataToLocalStorage: "[AUTH] Set localStorage"
 };

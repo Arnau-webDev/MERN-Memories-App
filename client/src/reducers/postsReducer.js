@@ -13,7 +13,7 @@ const postsReducer = (state = initialState, action) => {
         case types.postsDelete:
             return state.filter((post) => post._id !== action.payload);
         case types.postsLike:
-            return state.map((post) => post._id === action.payload ? { ...post, likeCount: post.likeCount + 1 } : post);
+            return state.map((post) => post._id === action.payload.id ? { ...post, likeCount: post.likeCount + 1, likedBy: action.payload.likedBy } : post);
         default:
             return state;
     }
