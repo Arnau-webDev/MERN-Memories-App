@@ -4,28 +4,18 @@ import moment from "moment";
 
 
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core";
-import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useDispatch } from "react-redux";
 import { startDeletePost, startLikePost } from "../../../actions/posts";
+import Likes from "./Likes";
 
 const Post = ({ post, setCurrentId }) => {
 
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem("profile"));
 
-    const {
-        media,
-        border,
-        fullHeightCard,
-        card,
-        overlay,
-        overlay2,
-        grid,
-        details,
-        title,
-        cardActions
-    } = useStyles();
+    const { media, card, overlay, overlay2, details, title, cardActions } = useStyles();
 
     return (
         <Card className={card}>
@@ -34,11 +24,13 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="h6">{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
-            <div className={overlay2}>
-                <Button style={{ color: "white" }} size="small" onClick={() => { setCurrentId(post._id); }}>
-                    <MoreHorizIcon fontSize="medium" />
-                </Button>
-            </div>
+            {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                <div className={overlay2}>
+                    <Button style={{ color: "white" }} size="small" onClick={() => { setCurrentId(post._id); }}>
+                        <MoreHorizIcon fontSize="medium" />
+                    </Button>
+                </div>
+            )}
             <div className={details}>
                 <Typography variant="body2" color="textSecondary">
                     {post.tags.map((tag) => `#${tag} `)}
@@ -49,14 +41,15 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="body2" color="textSecondary" component="p" >{post.message}</Typography>
             </CardContent>
             <CardActions className={cardActions}>
-                <Button size="small" color="primary" onClick={() => dispatch(startLikePost(post._id))}>
-                    <ThumbUpAltIcon fontSize="small" style={{ margin: "0 3px" }} />
-                    {`Like ${post.likedBy.length}`}
+                <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(startLikePost(post._id))}>
+                    <Likes post={post} user={user} />
                 </Button>
-                <Button size="small" color="primary" onClick={() => dispatch(startDeletePost(post._id))}>
-                    <DeleteIcon fontSize="small" />
-                    Delete
-                </Button>
+                {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <Button size="small" color="primary" onClick={() => dispatch(startDeletePost(post._id))}>
+                        <DeleteIcon fontSize="small" />
+                        Delete
+                    </Button>
+                )}
             </CardActions>
         </Card>
     );

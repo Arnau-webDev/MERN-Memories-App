@@ -25,7 +25,6 @@ export const startCreatePost = (post) => {
     return async (dispatch) => {
         try {
             const { data } = await api.createPost(post);
-            console.log(data);
             dispatch(createPost(data));
 
         } catch (error) {
@@ -83,8 +82,6 @@ export const startLikePost = (id) => {
     return async (dispatch) => {
         try {
             const { data } = await api.likePost(id);
-
-            console.log(data);
 
             dispatch(likePost(data._id, data.likedBy));
         } catch (error) {

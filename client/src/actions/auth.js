@@ -41,7 +41,6 @@ const authSignIn = (data) => {
 
 export const authStartSignUp = (formValues, history) => {
     return async (dispatch) => {
-        console.log("action signup");
         try {
             const { data } = await api.signUp(formValues);
             console.log(data);

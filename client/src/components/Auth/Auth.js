@@ -39,7 +39,6 @@ const Auth = () => {
         e.preventDefault();
 
         if (isSignup) {
-            console.log("submit");
             dispatch(authStartSignUp(formValues, history));
         } else {
             dispatch(authStartSignIn(formValues, history));
@@ -64,7 +63,6 @@ const Auth = () => {
     };
 
     const googleSuccess = async (res) => {
-        console.log(res);
         const result = res?.profileObj;  // ?. ignore if undefined
         const token = res?.tokenId;
 
