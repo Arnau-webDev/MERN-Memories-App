@@ -6,7 +6,7 @@ import Posts from "../Posts/Posts";
 import Pagination from "../Pagination";
 
 import { useDispatch } from "react-redux";
-import { startFetchPosts } from "../../actions/posts";
+import { startFetchPosts, startGetPostsBySearch } from "../../actions/posts";
 
 import useStyles from "./styles";
 import { useHistory, useLocation } from "react-router-dom";
@@ -28,14 +28,15 @@ const Home = () => {
     const page = query.get("page") || 1;
     const searchQuery = query.get("searchQuery");
 
-    useEffect(() => {
-        dispatch(startFetchPosts());
-        // console.log(posts);
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(startFetchPosts());
+    //     // console.log(posts);
+    // }, [dispatch]);
 
     const searchPost = () => {
-        if (searchInputValue.trim()) {
-            // dispatch search posts
+        if (searchInputValue.trim() || tags) {
+            dispatch(startGetPostsBySearch({ search: searchInputValue, tags: tags.join(",") }));
+            history.push(`/posts/search?searchQuery=${searchInputValue || "none"}&tags=${tags.join(",")}`);
         } else {
             history.push("/");
         }
@@ -77,16 +78,17 @@ const Home = () => {
                                 value={tags}
                                 onAdd={handleAdd}
                                 onDelete={handleDelete}
-                                label="Type and enter to add tag"
+                                label="Press enter to add tag"
                                 variant="outlined"
                             />
                             <Button onClick={searchPost} className={searchButton} color="primary" variant="contained">Search</Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper className={pagination} elevation={6}>
-                            <Pagination />
-
-                        </Paper>
+                        {(!searchQuery && !tags.length) && (
+                            <Paper className={pagination} elevation={6}>
+                                <Pagination page={page} />
+                            </Paper>
+                        )}
                     </Grid>
                 </Grid>
             </Container>

@@ -1,6 +1,7 @@
 
 export const types = {
     postsFetchAll: "[POSTS] Fetch All",
+    postsFetchBySearch: "[POSTS] Fetch by search",
     postsCreateNew: "[POSTS] Create New",
     postsUpdate: "[POSTS] Update existing post",
     postsDelete: "[POSTS] Delete post",
@@ -10,5 +11,8 @@ export const types = {
     authLogout: "[AUTH] Logout",
     authSignIn: "[AUTH] Sign In",
     authSignUp: "[AUTH] Sign Up",
-    authPersistedDataToLocalStorage: "[AUTH] Set localStorage"
+    authPersistedDataToLocalStorage: "[AUTH] Set localStorage",
+
+    appStartLoading: "[APP] Start loading",
+    appStopLoading: "[APP] Stop loading",
 };

@@ -2,12 +2,16 @@
 import * as api from "../api";
 import { types } from "../types/posts";
 
-export const startFetchPosts = () => {
+export const startFetchPosts = (page) => {
     return async (dispatch) => {
         try {
-            const { data } = await api.fetchPosts();
+            dispatch(startLoading());
+            const { data } = await api.fetchPosts(page);
 
             dispatch(fetchPosts(data));
+            setTimeout(() => {
+                dispatch(stopLoading());
+            }, 150);
         } catch (error) {
             console.log(error);
         }
@@ -21,11 +25,29 @@ const fetchPosts = (data) => {
     };
 };
 
+const startLoading = () => {
+    return {
+        type: types.appStartLoading
+    };
+};
+
+const stopLoading = () => {
+    return {
+        type: types.appStopLoading
+    };
+};
+
 export const startCreatePost = (post) => {
     return async (dispatch) => {
         try {
+            dispatch(startLoading());
             const { data } = await api.createPost(post);
+
             dispatch(createPost(data));
+            setTimeout(() => {
+                dispatch(startFetchPosts());
+                dispatch(stopLoading());
+            }, 150);
 
         } catch (error) {
             console.log(error);
@@ -94,5 +116,28 @@ const likePost = (id, likedBy) => {
     return {
         type: types.postsLike,
         payload: { id, likedBy }
+    };
+};
+
+export const startGetPostsBySearch = (searchQuery) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+            const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+
+            dispatch(getPostsBySearch(data));
+            setTimeout(() => {
+                dispatch(stopLoading());
+            }, 150);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+const getPostsBySearch = (data) => {
+    return {
+        type: types.postsFetchBySearch,
+        payload: data
     };
 };

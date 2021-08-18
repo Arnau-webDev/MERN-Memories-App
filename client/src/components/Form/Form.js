@@ -19,7 +19,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState(initialFormState);
 
     const dispatch = useDispatch();
-    const postToEdit = useSelector(state => currentId ? state.posts.find((p) => p._id === currentId) : null);
+    const postToEdit = useSelector(state => currentId ? state.posts.posts.find((p) => p._id === currentId) : null);
 
     useEffect(() => {
         if (postToEdit) setPostData(postToEdit);
@@ -31,11 +31,12 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const userName = JSON.parse(user);
 
         if (currentId) {
-            dispatch(startUpdatePost(currentId, { ...postData, name: user?.result?.name }));
+            dispatch(startUpdatePost(currentId, { ...postData, name: userName?.result?.name }));
         } else {
-            dispatch(startCreatePost({ ...postData, name: user?.result?.name }));
+            dispatch(startCreatePost({ ...postData, name: userName?.result?.name }));
         }
 
         // Clear Form
@@ -49,7 +50,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     if (!user) {
         return (
-            <Paper className={paper}>
+            <Paper className={paper} elevation={6}>
                 <Typography variant="h6" align="center">
                     Please Sign In to create your own memories and like other memories.
                 </Typography>
@@ -58,7 +59,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper className={paper}>
+        <Paper className={paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${form} ${root}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">{!currentId ? "Creating a memory" : "Editing a memory"}</Typography>
                 <TextField

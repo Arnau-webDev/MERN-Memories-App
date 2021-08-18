@@ -18,7 +18,7 @@ const Post = ({ post, setCurrentId }) => {
     const { media, card, overlay, overlay2, details, title, cardActions } = useStyles();
 
     return (
-        <Card className={card}>
+        <Card className={card} raised elevation={6}>
             <CardMedia className={media} image={post.selectedFile} title={post.title} component="base" />
             <div className={overlay}>
                 <Typography variant="h6">{post.name}</Typography>
