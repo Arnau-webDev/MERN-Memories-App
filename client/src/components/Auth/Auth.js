@@ -11,14 +11,13 @@ import Icon from "./Icon";
 import { useDispatch } from "react-redux";
 import { authLogin, authStartSignIn, authStartSignUp } from "../../actions/auth";
 import { useHistory } from "react-router-dom";
-import { types } from "../../types/posts";
 
 const initialState = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
+    firstName: "Test",
+    lastName: "User",
+    email: "testUserNoRegister@gmail.com",
+    password: "test12345",
+    confirmPassword: "test12345"
 };
 
 const Auth = () => {

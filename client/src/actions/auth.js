@@ -1,5 +1,6 @@
 import { types } from "../types/posts";
 import * as api from "../api";
+import Swal from "sweetalert2";
 
 export const authLogin = (result, token) => {
     localStorage.setItem("profile", JSON.stringify({ result, token }));
@@ -27,6 +28,11 @@ export const authStartSignIn = (formValues, history) => {
 
             history.push("/");
         } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "User or password are incorrect!!",
+            });
             console.log(error);
         }
     };
@@ -44,12 +50,18 @@ export const authStartSignUp = (formValues, history) => {
         try {
             const { data } = await api.signUp(formValues);
             console.log(data);
+
             dispatch(authSignUp(data));
 
             localStorage.setItem("profile", JSON.stringify(data));
 
             history.push("/");
         } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "User Already Exists!!",
+            });
             console.log(error);
         }
     };

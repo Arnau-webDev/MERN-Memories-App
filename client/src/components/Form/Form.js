@@ -31,19 +31,23 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const userName = JSON.parse(user);
 
         if (currentId) {
             dispatch(startUpdatePost(currentId, { ...postData, name: userName?.result?.name }));
+            console.log("entra");
         } else {
             dispatch(startCreatePost({ ...postData, name: userName?.result?.name }));
+            console.log("entra");
         }
 
         // Clear Form
         handleFormClear();
     };
 
-    const handleFormClear = () => {
+    const handleFormClear = (e) => {
+        if (e) e.preventDefault();
         setCurrentId(null);
         setPostData(initialFormState);
     };
@@ -60,7 +64,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     return (
         <Paper className={paper} elevation={6}>
-            <form autoComplete="off" noValidate className={`${form} ${root}`} onSubmit={handleSubmit}>
+            <form autoComplete="off" noValidate className={`${form} ${root}`}>
                 <Typography variant="h6">{!currentId ? "Creating a memory" : "Editing a memory"}</Typography>
                 <TextField
                     value={postData.title}
@@ -91,7 +95,7 @@ const Form = ({ currentId, setCurrentId }) => {
                         onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
                     />
                 </div>
-                <Button className={buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+                <Button className={buttonSubmit} variant="contained" color="primary" size="large" type="submit" onClick={handleSubmit} fullWidth>Submit</Button>
                 <Button onClick={handleFormClear} variant="contained" color="secondary" size="small" type="submit" fullWidth>Clear</Button>
             </form>
         </Paper>

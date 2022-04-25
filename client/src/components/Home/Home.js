@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container, Grid, Grow, Paper, TextField, Button, AppBar } from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
 import Form from "../Form/Form";
@@ -48,6 +48,11 @@ const Home = () => {
         }
     };
 
+    const fetchAllPosts = () => {
+        dispatch(startFetchPosts());
+        history.push("/");
+    };
+
     const handleAdd = (tag) => setTags([...tags, tag]);
 
     const handleDelete = (tagToDelete) => setTags(tags.filter((tag) => tag !== tagToDelete));
@@ -82,6 +87,7 @@ const Home = () => {
                                 variant="outlined"
                             />
                             <Button onClick={searchPost} className={searchButton} color="primary" variant="contained">Search</Button>
+                            <Button onClick={fetchAllPosts} className={searchButton} color="secondary" variant="contained">All Posts</Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         {(!searchQuery && !tags.length) && (

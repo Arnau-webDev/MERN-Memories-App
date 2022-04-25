@@ -18,7 +18,7 @@ const Navbar = () => {
 
     // let { persistedToLocalStorage } = useSelector(state => state.auth);
 
-    const { appBar, heading, image, toolbar, profile, userName, brandContainer, purple, userInfo } = useStyles();
+    const { appBar, heading, image, toolbar, profile, userName, brandContainer, purple, userInfo, h1 } = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
     useEffect(() => {
@@ -43,7 +43,8 @@ const Navbar = () => {
     return (
         <AppBar className={appBar} position="static" color="inherit">
             <Link to="/" className={brandContainer}>
-                <img src={memoriesText} alt="icon" height="45px" />
+                {/* <img src={memoriesText} alt="icon" height="45px" /> */}
+                <h1 className={h1}>Xperiences</h1>
                 <img className={image} src={memoriesLogo} alt="memories" height="40px" />
             </Link>
             <Toolbar className={toolbar}>

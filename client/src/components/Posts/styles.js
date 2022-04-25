@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
     mainContainer: {
         display: "flex",
-        alignItems: "center",
+        flexDirection: "row",
+        flexFlow: "wrap",
     },
     loadingContainer: {
         height: "100%",
@@ -17,4 +18,7 @@ export default makeStyles((theme) => ({
     actionDiv: {
         textAlign: "center",
     },
+    card: {
+        minHeight: "500px",
+    }
 }));

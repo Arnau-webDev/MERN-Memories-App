@@ -1,6 +1,7 @@
 
 import * as api from "../api";
 import { types } from "../types/posts";
+import Swal from "sweetalert2";
 
 export const startFetchPosts = (page) => {
     return async (dispatch) => {
@@ -39,6 +40,34 @@ const stopLoading = () => {
 
 export const startCreatePost = (post) => {
     return async (dispatch) => {
+        if (post.title === "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Title is required!!",
+            });
+            return;
+        }
+
+        if (post.message === "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Message is required!!",
+            });
+            return;
+        }
+
+        if (post.tags === "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "At least one tag is required!!",
+            });
+            return;
+        }
+
+
         try {
             dispatch(startLoading());
             const { data } = await api.createPost(post);

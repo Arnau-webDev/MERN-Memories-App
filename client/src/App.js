@@ -26,7 +26,6 @@ const App = () => {
                         !user ? <Auth /> : <Redirect to="/posts" />
                     )} />
 
-                    {/* <Redirect to="/posts" /> */}
                 </Switch>
             </Container>
         </Router>

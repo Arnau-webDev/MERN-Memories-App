@@ -20,7 +20,6 @@ const postsReducer = (state = initialState, action) => {
         case types.postsCreateNew:
             return { ...state, posts: [...state.posts, action.payload] };
         case types.postsUpdate:
-            console.log(state);
             return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post) };
         case types.postsDelete:
             return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };

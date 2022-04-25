@@ -56,7 +56,8 @@ export default makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-around",
-        flexBasis: "280px"
+        flexBasis: "280px",
+        textDecoration: "none"
     },
     purple: {
         color: theme.palette.getContrastText(deepPurple[500]),
@@ -64,5 +65,11 @@ export default makeStyles((theme) => ({
     },
     userInfo: {
         display: "flex",
+    },
+    h1: {
+        fontSize: "2.5rem",
+        color: "black",
+        fontFamily: "Lobster, cursive",
+        margin: 0
     }
 }));
