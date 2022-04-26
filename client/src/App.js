@@ -10,7 +10,7 @@ import PostDetails from "./components/PostDetails/PostDetails";
 
 const App = () => {
 
-    const user = JSON.parse(localStorage.getItem("profile"));
+    // const user = JSON.parse(localStorage.getItem("profile"));
 
     return (
         <Router>
@@ -22,9 +22,10 @@ const App = () => {
                     <Route path="/posts/search" exact component={Home} />
                     <Route path="/posts/:id" component={PostDetails} />
 
-                    <Route path="/auth" exact component={() => (
+                    <Route path="/auth" exact component={Auth} />
+                    {/* <Route path="/posts" exact component={() => (
                         !user ? <Auth /> : <Redirect to="/posts" />
-                    )} />
+                    )} /> */}
 
                 </Switch>
             </Container>

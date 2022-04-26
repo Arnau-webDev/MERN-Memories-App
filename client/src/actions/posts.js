@@ -197,6 +197,8 @@ export const startGetPostsBySearch = (searchQuery) => {
             dispatch(startLoading());
             const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
 
+            console.log(data);
+
             dispatch(getPostsBySearch(data));
             setTimeout(() => {
                 dispatch(stopLoading());
