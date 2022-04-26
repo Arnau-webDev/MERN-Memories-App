@@ -1,6 +1,7 @@
 
 export const types = {
     postsFetchAll: "[POSTS] Fetch All",
+    postsFetchPost: "[POSTS] Fetch Post",
     postsFetchBySearch: "[POSTS] Fetch by search",
     postsCreateNew: "[POSTS] Create New",
     postsUpdate: "[POSTS] Update existing post",

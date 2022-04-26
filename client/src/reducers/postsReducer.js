@@ -17,6 +17,8 @@ const postsReducer = (state = initialState, action) => {
             };
         case types.postsFetchBySearch:
             return { ...state, posts: action.payload };
+        case types.postsFetchPost:
+            return { ...state, post: action.payload };
         case types.postsCreateNew:
             return { ...state, posts: [...state.posts, action.payload] };
         case types.postsUpdate:

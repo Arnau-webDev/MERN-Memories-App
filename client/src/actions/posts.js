@@ -3,6 +3,22 @@ import * as api from "../api";
 import { types } from "../types/posts";
 import Swal from "sweetalert2";
 
+export const getPost = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(startLoading());
+            const { data } = await api.fetchPost(id);
+
+            dispatch(fetchPost(data));
+            setTimeout(() => {
+                dispatch(stopLoading());
+            }, 150);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
 export const startFetchPosts = (page) => {
     return async (dispatch) => {
         try {
@@ -16,6 +32,13 @@ export const startFetchPosts = (page) => {
         } catch (error) {
             console.log(error);
         }
+    };
+};
+
+const fetchPost = (data) => {
+    return {
+        type: types.postsFetchPost,
+        payload: data
     };
 };
 
@@ -66,7 +89,6 @@ export const startCreatePost = (post) => {
             });
             return;
         }
-
 
         try {
             dispatch(startLoading());
