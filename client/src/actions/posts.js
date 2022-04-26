@@ -170,6 +170,27 @@ const likePost = (id, likedBy) => {
     };
 };
 
+export const commentPost = (value, id) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await api.comment(value, id);
+
+            dispatch(commentPostUI(data));
+
+            return data.comments;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+export const commentPostUI = (data) => {
+    return {
+        type: types.postsComment,
+        payload: data
+    };
+};
+
 export const startGetPostsBySearch = (searchQuery) => {
     return async (dispatch) => {
         try {

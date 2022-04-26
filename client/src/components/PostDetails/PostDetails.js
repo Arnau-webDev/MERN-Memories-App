@@ -12,7 +12,7 @@ const PostDetails = () => {
     const { post, posts, isLoading } = useSelector(state => state.posts);
     const dispatch = useDispatch();
     const history = useHistory();
-    const { media, card, section, imageSection, recommendedPosts, loadingPaper, commentsOuterContainer, commentsInnerContainer } = useStyles();
+    const { media, card, section, imageSection, loadingPaper } = useStyles();
     const { id } = useParams();
 
     useEffect(() => {
