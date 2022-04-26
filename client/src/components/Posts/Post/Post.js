@@ -19,7 +19,10 @@ const Post = ({ post, setCurrentId }) => {
 
     const { media, card, overlay, overlay2, details, title, cardActions, cardAction } = useStyles();
 
-    const openPost = () => {
+    const openPost = (e) => {
+        console.log(e.target.className);
+        if (e.target.className?.animVal === "MuiSvgIcon-root") return;
+        if (e.target.className === "MuiButton-label") return;
         history.push(`/posts/${post._id}`);
     };
 
@@ -43,9 +46,9 @@ const Post = ({ post, setCurrentId }) => {
                         {post.tags.map((tag) => `#${tag} `)}
                     </Typography>
                 </div>
-                <Typography className={title} variant="h5" gutterBottom>{post.title}</Typography>
+                <Typography className={title} variant="h5">{post.title}</Typography>
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p" >{post.message}</Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">{post.message.split(" ").splice(0, 20).join(" ")}{post.message.split(" ").length > 20 && "..."}</Typography>
                 </CardContent>
             </ButtonBase>
             <CardActions className={cardActions}>
