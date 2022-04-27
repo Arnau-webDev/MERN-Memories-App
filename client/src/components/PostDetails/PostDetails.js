@@ -36,7 +36,7 @@ const PostDetails = () => {
                     <div className={section}>
                         <Typography variant="h3" component="h2">{post.title}</Typography>
                         <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => (
-                            <Link to={`/tags/${tag}`} style={{ textDecoration: "none", color: "#3f51b5" }} key={tag}>
+                            <Link to={`/tags/${tag}`} style={{ textDecoration: "none", color: "#3f51b5", pointerEvents: "none" }} key={tag}>
                                 {` #${tag} `}
                             </Link>
                         ))}
@@ -44,7 +44,7 @@ const PostDetails = () => {
                         <Typography gutterBottom variant="body1" component="p">{post.message}</Typography>
                         <Typography variant="h6">
                             Created by:
-                            <Link to={`/creators/${post.name}`} style={{ textDecoration: "none", color: "#3f51b5" }}>
+                            <Link to={`/creators/${post.name}`} style={{ textDecoration: "none", color: "#3f51b5", pointerEvents: "none" }}>
                                 {` ${post.name}`}
                             </Link>
                         </Typography>
