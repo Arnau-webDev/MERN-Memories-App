@@ -36,10 +36,8 @@ const Form = ({ currentId, setCurrentId }) => {
 
         if (currentId) {
             dispatch(startUpdatePost(currentId, { ...postData, name: userName?.result?.name }));
-            console.log("entra");
         } else {
             dispatch(startCreatePost({ ...postData, name: userName?.result?.name }));
-            console.log("entra");
         }
 
         // Clear Form
@@ -85,7 +83,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(",") })}
                     name="tags"
                     variant="outlined"
-                    label="Tags"
+                    label="Tags separated by spaces"
                     fullWidth
                 />
                 <div className={fileInput}>

@@ -34,9 +34,6 @@ const Home = () => {
     // }, [dispatch]);
 
     const searchPost = () => {
-        console.log("entra");
-        console.log(searchInputValue);
-        console.log(tags);
         if (searchInputValue.trim() || tags) {
             dispatch(startGetPostsBySearch({ search: searchInputValue, tags: tags.join(",") }));
             history.push(`/posts/search?searchQuery=${searchInputValue || "none"}&tags=${tags.join(",")}`);

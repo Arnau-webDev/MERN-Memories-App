@@ -16,14 +16,16 @@ const Post = ({ post, setCurrentId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem("profile"));
-
     const { media, card, overlay, overlay2, details, title, cardActions, cardAction } = useStyles();
 
     const openPost = (e) => {
-        console.log(e.target.className);
         if (e.target.className?.animVal === "MuiSvgIcon-root") return;
         if (e.target.className === "MuiButton-label") return;
         history.push(`/posts/${post._id}`);
+    };
+
+    const handleLike = async () => {
+        dispatch(startLikePost(post._id));
     };
 
     return (
@@ -52,7 +54,7 @@ const Post = ({ post, setCurrentId }) => {
                 </CardContent>
             </ButtonBase>
             <CardActions className={cardActions}>
-                <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(startLikePost(post._id))}>
+                <Button size="small" color="primary" disabled={!user?.result} onClick={handleLike}>
                     <Likes post={post} user={user} />
                 </Button>
                 {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (

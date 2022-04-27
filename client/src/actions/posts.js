@@ -90,6 +90,10 @@ export const startCreatePost = (post) => {
             return;
         }
 
+        const splitTags = post?.tags.toString().split(" ");
+
+        if (splitTags) post.tags = splitTags;
+
         try {
             dispatch(startLoading());
             const { data } = await api.createPost(post);
@@ -194,6 +198,7 @@ export const commentPostUI = (data) => {
 export const startGetPostsBySearch = (searchQuery) => {
     return async (dispatch) => {
         try {
+            console.log(searchQuery);
             dispatch(startLoading());
             const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
 
